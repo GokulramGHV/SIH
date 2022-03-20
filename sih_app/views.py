@@ -75,11 +75,14 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         return Ticket.objects.filter(user=self.request.user)
 
-def TicketCheckView(request, ticketStr):
+def TicketCheckView(request, ticketStr, password):
+    password_str = "xpK9mg9RMXACkhwz"
     try:
         ticket = Ticket.objects.get(ticket_str=ticketStr, visit_date=timezone.now())
     except:
         ticket = None
+    if password != password_str:
+        return render(request, "access_denied.html")
     if ticket:
         site = Site.objects.filter(id=ticket.site.id, open_time__lte=timezone.now(), close_time__gt=timezone.now())
         if site and ticket.attend_status == "YET":

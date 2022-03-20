@@ -5,3 +5,4 @@ from .models import *
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Site)
+admin.site.register(Ticket)
