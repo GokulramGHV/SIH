@@ -17,12 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from sih_app.views import *
 from django.contrib.auth.views import LogoutView
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", HomePageView.as_view()),
-    path("user/login/", UserLoginView.as_view()),
+    path("user/login/", UserLoginView.as_view(redirect_authenticated_user=True)),
     path("user/logout/", LogoutView.as_view()),
     path("user/signup/", UserCreateView.as_view()),
     path("sites/", SitesView.as_view()),
@@ -30,4 +31,4 @@ urlpatterns = [
     path("tickets/book/<int:id>/", TicketCreateView.as_view()),
     path("tickets/detail/<pk>/", TicketDetailView.as_view()),
     path("tickets/check/<str:ticketStr>/", TicketCheckView),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
