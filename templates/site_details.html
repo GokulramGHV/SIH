@@ -1,0 +1,37 @@
+<h1>Site Details</h1>
+<h2>{{object.name}}</h2>
+
+<h3>Description</h3>
+<p>{{object.description}}</p>
+
+<h3>Location</h3>
+<p>{{object.location}}</p>
+
+<h3>Timings</h3>
+<p>From {{object.open_time}} to {{object.close_time}}</p>
+<br />
+<h4>Phone: {{object.phone}}</h4>
+<h4>Ticket Price: INR {{object.ticket_price_per_head}} (per head)</h4>
+<br />
+<form action="/tickets/book/{{site.id}}/" method="get">
+  <label for="visit_date">Select Date:</label>
+  <input type="date" name="visit_date" required/><br />
+  <br />
+  <label for="count">Enter no. of tickets:</label>
+  <input type="number" id="count" name="count" required/><br />
+  <div>
+      <h3>Total Price: INR <span id="total">0</span></h3>
+  </div>
+  <button type="submit">Buy Tickets</button>
+  
+</form>
+
+<script>
+    elem = document.getElementById('count');
+    elem.oninput = () => {
+    var count = document.getElementById('count').value;
+    var price = parseInt("{{object.ticket_price_per_head}}");
+    var total = count * price;
+    document.getElementById('total').innerHTML = total;
+  };
+</script>

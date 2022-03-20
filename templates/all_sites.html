@@ -1,0 +1,12 @@
+<h1>All Heritage Sites</h1>
+<br>
+{%for site in sites%}
+<div style="padding: 0.5rem; border: 2px solid grey; margin-bottom:1rem;">
+  {{site.name}} <br />
+  <br />
+  {{site.location}} <br />
+  From {{site.open_time}} to {{site.close_time}} <br />
+  Phone: {{site.phone}} <br>
+  <a href="/sites/detail/{{site.id}}/">View Details</a>
+</div>
+{%endfor%}

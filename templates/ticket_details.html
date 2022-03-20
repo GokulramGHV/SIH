@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <div id="element-to-print">
+      <h1>Ticket Details</h1>
+      <h3>Site</h3>
+      <p>{{object.site}}</p>
+      <h3>Booked By</h3>
+      <p>{{object.user}}</p>
+      <h3>Booked Date</h3>
+      <p>{{object.booked_date}}</p>
+      <h3>Visit Date</h3>
+      <p>{{object.visit_date}}</p>
+      <h3>Ticket QR</h3>
+      <canvas id="canvas"></canvas>
+    </div>
+    <button onclick="savePDF()">Save Ticket</button>
+
+    <script>
+      QRCode.toCanvas(
+        document.getElementById('canvas'),
+        '{{object.ticket_str}}',
+        function (error) {
+          if (error) console.error(error);
+          console.log('success!');
+        }
+      );
+
+      function savePDF() {
+        var element = document.getElementById('element-to-print');
+        var opt = {
+          margin: 1,
+          filename: 'ticket{{object.id}}.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+        };
+        html2pdf().set(opt).from(element).save();
+      }
+    </script>
+
+    <p>{{object.ticket_str}}</p>
+  </body>
+</html>

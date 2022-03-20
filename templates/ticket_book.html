@@ -1,0 +1,9 @@
+<h1>Book Tickets</h1>
+<div class="mt-1 text-2xl">Do you want to book 'n' tickets on dd-mm-yyyy?</div>
+<div class="my-7 grid grid-cols-4 gap-5">
+  <button onclick="history.back()">No</button>
+  <form action="" method="POST" class="">
+    {% csrf_token %} {{form.as_p}}
+    <button type="submit">Yes</button>
+  </form>
+</div>
