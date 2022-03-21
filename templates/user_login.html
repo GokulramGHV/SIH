@@ -8,15 +8,15 @@
 <style>
   body {
     background-image: linear-gradient(
-        115deg,
-        rgba(163, 114, 41, 0.829),
-        rgba(244, 247, 206, 0.719)
+        90deg,
+        rgba(68, 63, 63, 0.616),
+        rgba(194, 193, 185, 0.644)
       ),
-      url(https://littlecowmountain.com/wp-content/uploads/2020/02/Findlay-farmers-market.jpg);
+      url(https://source.unsplash.com/1920x1080/?nature);
   }
   #main_form {
     background: white;
-    border-radius: 1%;
+    border-radius: 7px;
   }
   .form_title {
     text-align: center;
@@ -30,46 +30,53 @@
         text-align: center;
         margin:20px auto -10px;
     } */
-  .container {
-    margin-bottom: 170px;
+  .form-style {
+    width: 40rem;
+    padding: 2%;
+    border-radius: 1em;
+    background-color: white;
+  }
+  @media only screen and (max-width: 800px) {
+    .form-style {
+      margin-top: 5em;
+      width: 90vw;
+      padding: 1rem;
+      border-radius: 1em;
+    }
   }
 </style>
-<!-- <div class="alert alert-danger text-dark" role="alert">
-    Your login credentials were wrong! Please try again...
-  </div>       -->
 <h1 class="form_title">User Login</h1>
-<div class="container shadow" style="padding: 2%; width: 40vw" id="main_form">
-  <div class="form-sec">
-    <h4 style="text-align: center">Enter your credentials below</h4>
-    <br />
-
-    <form method="POST" action="">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="{{ form.username.id_for_label }}" class="text-lg"
-          >Username</label
-        >
-        <div>
-          {{ form.username }}
-          <span style="color: red">{{ form.username.errors }}</span>
+<div style="height: 55vh">
+  <div class="container shadow form-style" id="main_form">
+    <div class="form-sec">
+      <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="{{ form.username.id_for_label }}" class="text-lg">
+            Username
+          </label>
+          <div>
+            {{ form.username }}
+            <span style="color: red">{{ form.username.errors }}</span>
+          </div>
         </div>
-      </div>
-      <div class="form-group mt-3">
-        <label for="{{ form.password.id_for_label }}" class="text-lg"
-          >Password</label
-        >
-        <div>
-          {{ form.password }}
-          <span style="color: red">{{ form.password.errors }}</span>
+        <div class="form-group mt-3">
+          <label for="{{ form.password.id_for_label }}" class="text-lg">
+            Password
+          </label>
+          <div>
+            {{ form.password }}
+            <span style="color: red">{{ form.password.errors }}</span>
+          </div>
         </div>
-      </div>
-      <div class="mt-1" style="color: red">{{ form.non_field_errors }}</div>
+        <div class="mt-1" style="color: red">{{ form.non_field_errors }}</div>
 
-      <br />
-      <button type="submit" class="btn btn-primary container-fluid">
-        <i class="fa fa-user"></i> Sign In
-      </button>
-    </form>
+        <br />
+        <button type="submit" class="btn btn-primary container-fluid">
+          Sign In
+        </button>
+      </form>
+    </div>
   </div>
 </div>
 {%endblock%}

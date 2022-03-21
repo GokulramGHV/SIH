@@ -23,13 +23,16 @@ class UserLoginView(LoginView):
     form_class = CustomUserLoginForm
     template_name = "user_login.html"
 
+
 class UserCreateView(CreateView):
     form_class = CustomUserCreationForm
     template_name = "user_signup.html"
     success_url = "/user/login"
 
-class HomePageView(LoginRequiredMixin, TemplateView): # you might wanna change this
+
+class HomePageView(LoginRequiredMixin, TemplateView):  # you might wanna change this
     template_name = "root.html"
+
 
 class SitesView(LoginRequiredMixin, ListView):
     template_name = "all_sites.html"
@@ -38,20 +41,31 @@ class SitesView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Site.objects.all()
 
+
 class SiteDetailView(LoginRequiredMixin, DetailView):
     model = Site
     template_name = "site_details.html"
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["date"] = timezone.now()
+
+        return context
+
     def get_queryset(self):
         return Site.objects.all()
+
 
 import os
 import string
 import random
+
+
 def ticket_string(length):
     chars = string.ascii_letters + string.digits
     random.seed = os.urandom(1034)
     return "".join(random.choice(chars) for i in range(length))
+
 
 class TicketCreateView(LoginRequiredMixin, CreateView):
     form_class = TicketCreateForm
@@ -68,12 +82,14 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
         self.object.save()
         return HttpResponseRedirect(f"/tickets/detail/{self.object.id}/")
 
+
 class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Ticket
     template_name = "ticket_details.html"
 
     def get_queryset(self):
         return Ticket.objects.filter(user=self.request.user)
+
 
 def TicketCheckView(request, ticketStr, password):
     password_str = "xpK9mg9RMXACkhwz"
@@ -84,7 +100,11 @@ def TicketCheckView(request, ticketStr, password):
     if password != password_str:
         return render(request, "access_denied.html")
     if ticket:
-        site = Site.objects.filter(id=ticket.site.id, open_time__lte=timezone.now(), close_time__gt=timezone.now())
+        site = Site.objects.filter(
+            id=ticket.site.id,
+            open_time__lte=timezone.now(),
+            close_time__gt=timezone.now(),
+        )
         if site and ticket.attend_status == "YET":
             ticket.attend_status = "YES"
             ticket.save()
@@ -93,4 +113,3 @@ def TicketCheckView(request, ticketStr, password):
             return render(request, "failed.html")
     else:
         return render(request, "failed.html")
-    

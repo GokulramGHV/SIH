@@ -3,6 +3,10 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import *
 
 
+class DateInput(forms.DateInput):
+    input_type = "date"
+
+
 class CustomUserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(CustomUserLoginForm, self).__init__(*args, **kwargs)
@@ -27,6 +31,9 @@ class CustomUserCreationForm(UserCreationForm):
             "date_of_birth",
             "aadhaar_no",
         )
+        widgets = {
+            "date_of_birth": DateInput(),
+        }
 
 
 class TicketCreateForm(forms.ModelForm):

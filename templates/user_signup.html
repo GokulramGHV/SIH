@@ -1,9 +1,80 @@
-{%extends "base.html"%}
-{%block title%} User Login{%endblock%}
-{%block content%}
-<h1>User Signup</h1>
-<form action="" method="POST">
-    {% csrf_token %} {{form.as_p}}
-    <button type="submit" class="btn-lg mt-7">Signup</button>
-</form>
+{%extends "base.html"%} {%block title%} User Signup{%endblock%}
+{#------#}{%block content%}
+<style>
+  body {
+    background-image: linear-gradient(
+        90deg,
+        rgba(68, 63, 63, 0.616),
+        rgba(194, 193, 185, 0.644)
+      ),
+      url(https://source.unsplash.com/1920x1080/?nature);
+  }
+  #main_form {
+    background: white;
+    border-radius: 7px;
+  }
+  .form_title {
+    text-align: center;
+    color: white;
+    margin-top: 1.3em;
+    margin-bottom: 0.8em;
+  }
+  /* .alert {
+          display: {{visibility}};
+          width:70%;
+          text-align: center;
+          margin:20px auto -10px;
+      } */
+  .form-style {
+    width: 40rem;
+    padding: 2%;
+    border-radius: 1em;
+    background-color: white;
+    margin-bottom: 5rem;
+  }
+  @media only screen and (max-width: 800px) {
+    .form-style {
+      margin-top: 5em;
+      width: 90vw;
+      padding: 1rem;
+      border-radius: 1em;
+    }
+  }
+</style>
+
+<h1 class="form_title">User SignUp</h1>
+
+<div class="container shadow form-style" id="main_form">
+  <div class="form-sec">
+    <form method="POST" action="">
+      {% csrf_token %} {%for field in form%}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}" class="text-lg">
+          {{field.label}}
+        </label>
+        <div>
+          {{field}}
+          <span style="color: red">{{ field.errors }}</span>
+        </div>
+      </div>
+      {%endfor%}
+      <!-- <div class="form-group mt-3">
+          <label for="{{ form.password.id_for_label }}" class="text-lg">
+            Password
+          </label>
+          <div>
+            {{ form.password }}
+            <span style="color: red">{{ form.password.errors }}</span>
+          </div>
+        </div>
+        <div class="mt-1" style="color: red">{{ form.non_field_errors }}</div> -->
+
+      <br />
+      <button type="submit" class="btn btn-primary container-fluid">
+        Sign Up
+      </button>
+    </form>
+  </div>
+</div>
+
 {%endblock%}

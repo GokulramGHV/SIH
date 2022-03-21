@@ -12,7 +12,7 @@ USER_TYPES = (
 ATTEND_STATS = (
     ("YET", "YET"),
     ("YES", "YES"),
-    ("NO","NO"),
+    ("NO", "NO"),
 )
 
 phone_number_regex = RegexValidator(
@@ -29,7 +29,7 @@ class User(AbstractUser):
         max_length=14, validators=[phone_number_regex], null=True, blank=True
     )
     date_of_birth = models.DateField(editable=True, null=True, blank=True)
-    aadhaar_no = models.IntegerField(null=True)
+    aadhaar_no = models.BigIntegerField(null=True)
 
     def __str__(self):
         return f"{self.username}"
@@ -61,5 +61,7 @@ class Ticket(models.Model):
     site = models.ForeignKey(Site, on_delete=models.CASCADE, null=True, blank=True)
     booked_date = models.DateTimeField(auto_now=True)
     visit_date = models.DateField(null=True, blank=True)
-    attend_status = models.CharField(max_length=10, choices=ATTEND_STATS, default=ATTEND_STATS[0][0])
+    attend_status = models.CharField(
+        max_length=10, choices=ATTEND_STATS, default=ATTEND_STATS[0][0]
+    )
     count = models.IntegerField(null=True, blank=True)
