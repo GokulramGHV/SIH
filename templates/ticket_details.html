@@ -6,7 +6,7 @@
     grid-template-areas:
       'item1 item2'
       'item3 item4'
-      'item5 item5';
+      'item5 item6';
     gap: 2rem 5rem;
     padding: 10px;
   }
@@ -36,6 +36,10 @@
       <div class="item5">
         <h3>Ticket QR</h3>
         <canvas id="canvas"></canvas>
+      </div>
+      <div class="item6">
+        <h3>Ticket Count</h3>
+        <div style="font-size: 1.6rem">{{object.count}}</div>
       </div>
     </div>
   </div>

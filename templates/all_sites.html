@@ -1,12 +1,26 @@
-<h1>All Heritage Sites</h1>
-<br>
-{%for site in sites%}
-<div style="padding: 0.5rem; border: 2px solid grey; margin-bottom:1rem;">
-  {{site.name}} <br />
-  <br />
-  {{site.location}} <br />
-  From {{site.open_time}} to {{site.close_time}} <br />
-  Phone: {{site.phone}} <br>
-  <a href="/sites/detail/{{site.id}}/">View Details</a>
+{% extends 'base.html' %} {% block title %} All sites {% endblock title %}{#--#}
+{% block customstyle %} .site-title{ margin:0.5rem 0.5rem; } .card{ padding:
+0.5rem; border: 2px solid black; margin:0.5rem 0.5rem; width: 18rem;
+background-color:#f2f2f2db; } {% endblock customstyle %} {% block content %}
+<h1 class="site-title text-center my-4">All Heritage Sites</h1>
+<div class="mb-lg-5 p-5">
+  {%for site in sites%}
+  <div class="card">
+    <img
+      class="card-img-top"
+      src="https://www.holidify.com/images/cmsuploads/compressed/Valluvar_Kottam_at_Night_20190222095525jpg"
+      alt="Card image cap"
+    />
+    <div class="card-body">
+      <h5 class="card-title">{{site.name}}, {{site.location}}</h5>
+      <p class="card-text">
+        From {{site.open_time}} to {{site.close_time}} Phone: {{site.phone}}
+      </p>
+      <a href="/sites/detail/{{site.id}}/" class="btn btn-primary"
+        >View Details</a
+      >
+    </div>
+  </div>
+  {%endfor%}
 </div>
-{%endfor%}
+{% endblock content %}

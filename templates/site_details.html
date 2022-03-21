@@ -1,34 +1,63 @@
-<h1>Site Details</h1>
-<h2>{{object.name}}</h2>
+{% extends 'base.html' %}
+{% block title %}
+{{object.name}}
+{% endblock title %}
+{% block customstyle %}
+  .siteimg{
+    height:40vh;
+    margin-bottom:3%;
+  }
 
-<h3>Description</h3>
-<p>{{object.description}}</p>
+  .content-form{
+    padding: 5% 0;
+  }
 
-<h3>Location</h3>
-<p>{{object.location}}</p>
+  .con-text{
+    padding:0 5%;
+  }
 
-<h3>Timings</h3>
-<p>From {{object.open_time}} to {{object.close_time}}</p>
-<br />
-<h4>Phone: {{object.phone}}</h4>
-<h4>Ticket Price: INR {{object.ticket_price_per_head}} (per head)</h4>
-<br />
-<form action="/tickets/book/{{site.id}}/" method="get">
-  <label for="visit_date">Select Date: </label>
-  <input
-    type="date"
-    name="visit_date"
-    min="{{date|date:'Y-m-d'}}"
-    required
-  /><br />
-  <br />
-  <label for="count">Enter no. of tickets:</label>
-  <input type="number" id="count" name="count" required /><br />
-  <div>
-    <h3>Total Price: INR <span id="total">0</span></h3>
+  @media screen and (min-width:1200px){
+    .siteimg{
+      margin-top:22%;
+      margin-bottom:0%;
+    }
+  }
+  @media screen and (max-width:1200px){
+    .siteimg{
+      margin-top:3%;
+    }
+  }
+{% endblock customstyle %}
+{% block content %}
+<div class="container-fluid con-text">
+  <div class="row content-form"> 
+    <div class="col-xl-8">
+      <h2>{{object.name}}</h2>
+      <p>{{object.description}}</p>
+      <br>
+      <h4>Location: {{object.location}}</h4>
+      <h4>Timings: From {{object.open_time}} to {{object.close_time}}</h4>
+      <h5>Contact Number: {{object.phone}}</h5>
+      <br>
+      <h4>Ticket Price: INR {{object.ticket_price_per_head}} (per head)</h4>
+      <form action="/tickets/book/{{site.id}}/" method="get">
+        <div class="form-group form-inline">
+          <label for="visit_date">Select Date: </label>&ensp;
+          <input type="date" name="visit_date" min="{{date|date:'Y-m-d'}}" required/>
+        </div>
+        <div class="form-group form-inline">
+        <label for="count">Enter no. of tickets:</label>&ensp;
+        <input class="form-control col-sm-4" type="number" id="count" name="count" required/>
+        </div>
+        <h3 style="display:inline; margin-right:5%;">Total Price: INR <span id="total">0</span></h3>
+        <button class="btn btn-dark"type="submit">Buy Tickets</button>
+      </form>
+    </div>
+    <div class="col-xl-4">
+      <img class="siteimg" src="https://www.holidify.com/images/cmsuploads/compressed/Valluvar_Kottam_at_Night_20190222095525jpg" alt="Card image cap">
+    </div>
   </div>
-  <button type="submit">Buy Tickets</button>
-</form>
+</div>
 
 <script>
   elem = document.getElementById('count');
@@ -39,3 +68,4 @@
     document.getElementById('total').innerHTML = total;
   };
 </script>
+{% endblock content %}

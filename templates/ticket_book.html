@@ -1,9 +1,40 @@
-<h1>Book Tickets</h1>
-<div class="mt-1 text-2xl">Do you want to book 'n' tickets on dd-mm-yyyy?</div>
-<div class="my-7 grid grid-cols-4 gap-5">
-  <button onclick="history.back()">No</button>
+{% extends 'base.html' %}
+{% block title %}
+  Booking confirmation
+{% endblock title %}
+{% block customstyle %}
+  footer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+  }
+  body{
+    text-align:center;
+  }
+  @media screen and (min-width:969px){
+    .pagecontent{
+      padding:15% 5% 0;
+    }
+  }
+  @media screen and (min-width:401px) and (max-width:968px){
+    .pagecontent{
+      padding:25% 5% 0;
+    }
+  }
+  @media screen and (max-width:400px){
+    .pagecontent{
+      padding:50% 5%;
+    }
+  }
+{% endblock customstyle %}
+{% block content %}
+<div class="pagecontent">
+  <h2 class="page-title">Book Tickets</h2>
+<h5 class="mt-3 text-2x1">Do you want to book 'n' tickets on dd-mm-yyyy?</h5>
   <form action="" method="POST" class="">
     {% csrf_token %} {{form.as_p}}
-    <button type="submit">Yes</button>
+    <button type="submit" class="btn btn-success px-4 mx-3 my-2">Yes</button>
+    <button class="btn btn-danger inline px-4" onclick="history.back()">No</button>
   </form>
 </div>
+{% endblock content %}
