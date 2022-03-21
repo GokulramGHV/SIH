@@ -1,0 +1,34 @@
+{%extends "base.html"%} {%block title%}Tickets{%endblock%} {%block content%}
+<div class="my-4 w-100 d-flex justify-content-center align-content-center">
+  <h1>Booked Tickets</h1>
+</div>
+<div style="margin-bottom: 14.5rem">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Site</th>
+        <th scope="col">Booked Date</th>
+        <th scope="col">Visit Date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for ticket in tickets%}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{ticket.site}}</td>
+        <td>{{ticket.booked_date}}</td>
+        <td>{{ticket.visit_date|date:"d-m-Y" }}</td>
+        <td>{{ticket.attend_status}}</td>
+        <!--You might wanna change this-->
+        <td><a href="/tickets/detail/{{ticket.id}}">View Ticket</a></td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+  <hr style="border: 1px solid rgba(190, 190, 190, 0.493)" />
+</div>
+
+{%endblock%}

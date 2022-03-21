@@ -28,6 +28,7 @@ urlpatterns = [
     path("user/signup/", UserCreateView.as_view()),
     path("sites/", SitesView.as_view()),
     path("sites/detail/<pk>/", SiteDetailView.as_view()),
+    path("tickets/", TicketsView.as_view()),
     path("tickets/book/<int:id>/", TicketCreateView.as_view()),
     path("tickets/detail/<pk>/", TicketDetailView.as_view()),
     path("tickets/check/<str:password>/<str:ticketStr>/", TicketCheckView),

@@ -18,6 +18,17 @@ from django.utils import timezone
 from .models import *
 from .forms import *
 
+import os
+import string
+import random
+
+
+def ticket_string(length):
+    chars = string.ascii_letters + string.digits
+    random.seed = os.urandom(1034)
+    return "".join(random.choice(chars) for i in range(length))
+
+
 # Create your views here.
 class UserLoginView(LoginView):
     form_class = CustomUserLoginForm
@@ -56,15 +67,12 @@ class SiteDetailView(LoginRequiredMixin, DetailView):
         return Site.objects.all()
 
 
-import os
-import string
-import random
+class TicketsView(LoginRequiredMixin, ListView):
+    template_name = "tickets.html"
+    context_object_name = "tickets"
 
-
-def ticket_string(length):
-    chars = string.ascii_letters + string.digits
-    random.seed = os.urandom(1034)
-    return "".join(random.choice(chars) for i in range(length))
+    def get_queryset(self):
+        return Ticket.objects.filter(user=self.request.user)
 
 
 class TicketCreateView(LoginRequiredMixin, CreateView):

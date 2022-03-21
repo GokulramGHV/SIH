@@ -1,62 +1,104 @@
-<html>
-  <head>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-  </head>
-  <body>
-    <div id="element-to-print">
-      <h1>Ticket Details</h1>
-      <h3>Site</h3>
-      <p>{{object.site}}</p>
-      <h3>Booked By</h3>
-      <p>{{object.user}}</p>
-      <h3>Booked Date</h3>
-      <p>{{object.booked_date}}</p>
-      <h3>Visit Date</h3>
-      <p>{{object.visit_date}}</p>
-      <h3>Ticket QR</h3>
-      <canvas id="canvas"></canvas>
+{%extends "base.html"%} {%block title%}Ticket Details{%endblock%}{#-----#}
+{%block content%}
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-areas:
+      'item1 item2'
+      'item3 item4'
+      'item5 item5';
+    gap: 2rem 5rem;
+    padding: 10px;
+  }
+</style>
+<div
+  class="d-flex justify-content-center align-items-center p-3 rounded-lg flex-column mt-3"
+>
+  <div id="element-to-print">
+    <h1 class="mb-4">Ticket Details</h1>
+    <div class="grid-container">
+      <div class="item1">
+        <h3>Site</h3>
+        <p>{{object.site}}</p>
+      </div>
+      <div class="item2">
+        <h3>Booked By</h3>
+        <p>{{object.user}}</p>
+      </div>
+      <div class="item3">
+        <h3>Booked Date</h3>
+        <p>{{object.booked_date}}</p>
+      </div>
+      <div class="item4">
+        <h3>Visit Date</h3>
+        <p>{{object.visit_date}}</p>
+      </div>
+      <div class="item5">
+        <h3>Ticket QR</h3>
+        <canvas id="canvas"></canvas>
+      </div>
     </div>
-    <button onclick="savePDF()">Save Ticket</button>
+  </div>
+  <!-- <div id="element-to-print" style="width: 60vw">
+    <div class="container">
+      <h1>Ticket Details</h1>
+      <div class="row-cols-sm-2 my-4">
+        <div class="col">
+         
+        </div>
+        <div class="col-9">
+          
+        </div>
+      </div>
 
-    <script>
-      QRCode.toCanvas(
-        document.getElementById('canvas'),
-        '{{object.ticket_str}}',
-        function (error) {
-          if (error) console.error(error);
-          console.log('success!');
-        }
-      );
+      <div class="row my-4">
+        <div class="col">
+          
+        </div>
+        <div class="col-9">
+          
+        </div>
+      </div>
 
-      function savePDF() {
-        var element = document.getElementById('element-to-print');
-        var opt = {
-          margin: 1,
-          filename: 'ticket{{object.id}}.pdf',
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-        };
-        html2pdf().set(opt).from(element).save();
-      }
-    </script>
+      <div class="row my-4">
+        <div class="col">
+          
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="d-flex">
+    <button onclick="savePDF()" class="btn btn-info my-3">Save Ticket</button>
+    <button
+      onclick="window.location.href='/sites/'"
+      class="btn btn-dark my-3 mx-3"
+    >
+      Go Back
+    </button>
+  </div>
+</div>
 
-    <p>{{object.ticket_str}}</p>
-  </body>
-</html>
+<script>
+  QRCode.toCanvas(
+    document.getElementById('canvas'),
+    '{{object.ticket_str}}',
+    function (error) {
+      if (error) console.error(error);
+      console.log('success!');
+    }
+  );
+
+  function savePDF() {
+    var element = document.getElementById('element-to-print');
+    var opt = {
+      margin: 1,
+      filename: 'ticket{{object.id}}.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+    };
+    html2pdf().set(opt).from(element).save();
+    console.log('Saved');
+  }
+</script>
+{%endblock%}
