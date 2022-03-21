@@ -53,6 +53,8 @@
         font-family: 'Kaushan Script', cursive;
         font-size: 1.5rem;
       }
+      {% block customstyle %}
+      {% endblock customstyle %}
     </style>
   </head>
   <body>
@@ -111,7 +113,9 @@
         {% endif %}
       </div>
     </nav>
-    <div style="height: fit-content">{% block content %}{% endblock %}</div>
+    {% block bodycontent %}
+      
+    {% endblock bodycontent %}
 
     <footer id="footer" class="bg-dark">
       <i class="fab fa-twitter icon"></i>
