@@ -22,7 +22,7 @@
         <td>{{ticket.site}}</td>
         <td>{{ticket.booked_date}}</td>
         <td>{{ticket.visit_date|date:"d-m-Y" }}</td>
-        <td>{{ticket.attend_status}}</td>
+        <td> {%if ticket.attend_status == 'YET' %} Yet to visit {%else %} Expired {%endif%}</td>
         <td>{{ticket.count}}</td>
         <!--You might wanna change this-->
         <td><a href="/tickets/detail/{{ticket.id}}">View Ticket</a></td>
