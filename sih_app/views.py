@@ -17,7 +17,7 @@ from django.http import HttpResponseRedirect
 from django.utils import timezone
 from .models import *
 from .forms import *
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import string
 import random
@@ -60,7 +60,7 @@ class SiteDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["date"] = datetime.now()
-
+        context["date_max"] = datetime.now() + timedelta(days=60)
         return context
 
     def get_queryset(self):

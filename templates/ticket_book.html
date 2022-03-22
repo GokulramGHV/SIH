@@ -30,7 +30,7 @@
 {% block content %}
 <div class="pagecontent">
   <h2 class="page-title">Book Tickets</h2>
-<h5 class="mt-4 text-2x1">Do you want to book {{count}} {%if count > 1%}tickets{%else%} ticket{%endif%} for "{{site.name}}"  on {{visit_date}}?</h5>
+<h5 class="mt-4 text-2x1">Do you want to book {{count}} tickets for "{{site.name}}"  on {{visit_date}}?</h5>
   <form action="" method="POST" class="">
     {% csrf_token %} {{form.as_p}}
     <button type="submit" class="btn btn-success px-4 mx-3 my-4">Yes</button>

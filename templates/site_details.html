@@ -44,7 +44,7 @@
         alt="Card image cap"
       />
     </div>
-    <div class="pl-5 pt-5">
+    <div class="pl-5 pt-5 pb-5">
       <h2>{{object.name}}</h2>
       <p>{{object.description}}</p>
       <br />
@@ -63,6 +63,7 @@
             class="form-control"
             name="visit_date"
             min="{{date|date:'Y-m-d'}}"
+            max="{{date_max|date:'Y-m-d'}}"
             required
           />
         </div>
