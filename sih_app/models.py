@@ -43,6 +43,8 @@ class Site(models.Model):
     open_time = models.TimeField()
     close_time = models.TimeField()
     max_tickets = models.IntegerField()
+    image_url_1 = models.CharField(max_length=300, default="https://source.unsplash.com/1920x1080/?nature")
+    image_url_2 = models.CharField(max_length=300, default="https://source.unsplash.com/1920x1080/?nature")
     phone = models.CharField(
         max_length=14, validators=[phone_number_regex], null=True, blank=True
     )

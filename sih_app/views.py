@@ -59,7 +59,7 @@ class SiteDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["date"] = timezone.now()
+        context["date"] = datetime.now()
 
         return context
 
@@ -75,10 +75,30 @@ class TicketsView(LoginRequiredMixin, ListView):
         return Ticket.objects.filter(user=self.request.user)
 
 
+# class TicketConfirmView(LoginRequiredMixin, TemplateView):
+#     template_name = "ticket_book.html"
+
+#     def post(self, request, **kwargs):
+#         my_data = request.POST
+#         context = {
+#             "count": my_data["count"],
+#             "visit_date": my_data["visit_date"],
+#             "site": Site.objects.get(id=kwargs["id"]),
+#         }
+#         return super(TemplateView, self).render_to_response(context)
+
+
 class TicketCreateView(LoginRequiredMixin, CreateView):
     form_class = TicketCreateForm
     template_name = "ticket_book.html"
     success_url = "/sites/"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["count"] = self.request.GET.get("count")
+        context["visit_date"] = self.request.GET.get("visit_date")
+        context["site"] = Site.objects.get(id=self.kwargs["id"])
+        return context
 
     def form_valid(self, form):
         self.object = form.save()
