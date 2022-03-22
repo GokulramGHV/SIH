@@ -17,7 +17,7 @@ from django.http import HttpResponseRedirect
 from django.utils import timezone
 from .models import *
 from .forms import *
-
+from datetime import datetime
 import os
 import string
 import random
@@ -102,7 +102,7 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
 def TicketCheckView(request, ticketStr, password):
     password_str = "xpK9mg9RMXACkhwz"
     try:
-        ticket = Ticket.objects.get(ticket_str=ticketStr, visit_date=timezone.now())
+        ticket = Ticket.objects.get(ticket_str=ticketStr, visit_date=datetime.now())
     except:
         ticket = None
     if password != password_str:
@@ -110,8 +110,8 @@ def TicketCheckView(request, ticketStr, password):
     if ticket:
         site = Site.objects.filter(
             id=ticket.site.id,
-            open_time__lte=timezone.now(),
-            close_time__gt=timezone.now(),
+            open_time__lte=datetime.now(),
+            close_time__gt=datetime.now(),
         )
         if site and ticket.attend_status == "YET":
             ticket.attend_status = "YES"
